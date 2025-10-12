@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Raleway:wght@700&display=swap" rel="stylesheet">
     <style>
         /* General styles */
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f9fa;
@@ -190,10 +193,10 @@
                     <!-- Gallery items will be populated by JS -->
                 </div>
             </section>
-
+            
             <section id="sobre-mi-section" class="hidden max-w-2xl mx-auto">
                  <h2 class="text-4xl font-bold mb-8">Sobre mí</h2>
-                 <div class="space-y-6 text-base leading-relaxed"> <!-- Font size reduced here -->
+                 <div class="space-y-6 text-base leading-relaxed">
                      <p>El pintar y dibujar desde soporte de papel o lienzo hacia lenguaje digital, no ha sido más que un paso natural para encajar mi momento presente con mi forma de expresión personal.</p>
                      <p>Todavía me debato entre la equivalencia de lenguajes, pero sale ganando el instinto de supervivencia: ahora es esto o dormirlo. De camino, descubro nuevas formas de traer al objeto lo intangible, y aquello que reposa en continuo movimiento.</p>
                      <p>Los rostros, las miradas, los paisajes. Todo es lo mismo y todo es uno cuando ya no puedes mirar a otro lado.</p>
@@ -204,9 +207,7 @@
             <section id="contacto-section" class="hidden">
                 <div class="max-w-xl text-center mx-auto">
                     <h2 class="text-4xl font-bold mb-6">Contacto</h2>
-                    <p class="text-lg mb-8">
-                        Si te interesa mi trabajo, quieres encargar una obra o simplemente saludar, no dudes en escribirme.
-                    </p>
+                    <p class="text-lg mb-8">Si te interesa mi trabajo, quieres encargar una obra o simplemente saludar, no dudes en escribirme.</p>
                     <a href="mailto:dapascualg@gmail.com" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors duration-300">
                         Enviar un correo
                     </a>
@@ -283,22 +284,18 @@
             const darkIcon = document.getElementById('theme-toggle-dark-icon');
             const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-            // Correctly set initial icon state
             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
-                lightIcon.classList.remove('hidden');
-                darkIcon.classList.add('hidden');
+                if(lightIcon) lightIcon.classList.remove('hidden');
+                if(darkIcon) darkIcon.classList.add('hidden');
             } else {
-                darkIcon.classList.remove('hidden');
-                lightIcon.classList.add('hidden');
+                if(darkIcon) darkIcon.classList.remove('hidden');
+                if(lightIcon) lightIcon.classList.add('hidden');
             }
 
             themeToggleBtn.addEventListener('click', () => {
-                // Toggle icons first
-                darkIcon.classList.toggle('hidden');
-                lightIcon.classList.toggle('hidden');
-
-                // then, toggle the theme
+                if(darkIcon) darkIcon.classList.toggle('hidden');
+                if(lightIcon) lightIcon.classList.toggle('hidden');
                 const isDark = document.documentElement.classList.toggle('dark');
                 localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
             });
@@ -315,9 +312,11 @@
             Object.keys(links).forEach(key => {
                 links[key].addEventListener('click', (e) => {
                     e.preventDefault();
-                    showSection(key);
-                    if (key === 'obras') {
-                        filterGallery('retrato');
+                    const href = e.currentTarget.getAttribute('href');
+                    const sectionId = href.substring(1);
+                    showSection(sectionId);
+                    if (sectionId === 'obras') {
+                       filterGallery('retrato');
                     }
                 });
             });
