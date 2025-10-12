@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="light"> <!-- Default to light mode -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,475 +8,363 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Se ha añadido la fuente Raleway --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Raleway:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Raleway:wght@700&display=swap" rel="stylesheet">
     <style>
+        /* General styles */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa; /* Un gris muy claro, casi blanco */
+            background-color: #f8f9fa;
+            color: #374151;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+
+        /* Dark Mode */
+        html.dark body {
+            background-color: #111827;
+            color: #d1d5db;
+        }
+        html.dark aside {
+             background-color: #1f2937;
+             border-color: #374151;
+        }
+        html.dark header h1, html.dark .nav-link.active, html.dark .filter-btn.active-filter {
+            color: #ffffff;
+        }
+        html.dark header p, html.dark .nav-link, html.dark .filter-btn, html.dark .text-sm, html.dark .text-xs {
+            color: #9ca3af;
+        }
+        html.dark .gallery-item {
+            background-color: #374151;
+        }
+        html.dark h2, html.dark .text-lg {
+            color: #f9fafb;
+        }
+
+        /* Gallery Item Interaction */
         .gallery-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative; /* Necesario para posicionar el texto "VENDIDO" */
+            position: relative;
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
         }
-        .gallery-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .gallery-item .image-container {
-            flex-grow: 1;
-        }
-        #imageModal {
-            transition: opacity 0.3s ease;
-        }
-        .nav-link.active {
-            font-weight: 700;
-            color: #111827;
-        }
-        /* Estilos para los botones de filtro */
-        .filter-btn {
-            background: none;
-            border: none;
-            padding: 0;
-            font: inherit;
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1; /* Ensures all images are square */
             cursor: pointer;
-            outline: inherit;
-            color: #6B7280; /* text-gray-500 */
-            transition: color 0.2s;
         }
-        .filter-btn:hover {
-            color: #111827; /* text-gray-900 */
+        .image-container img {
+            transition: transform 0.4s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .filter-btn.active-filter {
+        .gallery-item:hover .image-container img {
+            transform: scale(1.1);
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .overlay-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+        }
+        .overlay-title {
             font-weight: 600;
-            color: #111827;
+            text-align: center;
         }
-        /* Estilo para aplicar la nueva fuente al nombre */
+        
+        /* Nav Link Style */
+        .nav-link.active, .filter-btn.active-filter {
+            font-weight: 700;
+        }
+
+        /* Header Font */
         header h1 {
             font-family: 'Raleway', sans-serif;
         }
-        /* Estilo para el texto VENDIDO */
+        
+        /* Sold Label */
         .sold-label {
             position: absolute;
-            bottom: 8px; /* Ajusta la posición vertical */
-            left: 8px; /* Ajusta la posición horizontal */
-            background-color: rgba(255, 0, 0, 0.7); /* Rojo semi-transparente */
+            bottom: 8px;
+            left: 8px;
+            background-color: rgba(220, 38, 38, 0.8);
             color: white;
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 4px;
-            font-size: 0.75rem; /* Pequeño */
+            font-size: 0.75rem;
             font-weight: bold;
             text-transform: uppercase;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInFromLeft {
+            from { opacity: 0; transform: translateX(-100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        aside {
+            opacity: 0;
+            animation: slideInFromLeft 0.8s ease-out forwards;
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body>
 
     <div class="flex flex-col md:flex-row min-h-screen">
-        <!-- Barra de Navegación Lateral --><aside class="w-full md:w-64 bg-orange-50 md:border-r border-gray-200 p-8 md:fixed md:h-full">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-72 bg-orange-50 md:border-r border-gray-200 p-8 md:fixed md:h-full flex flex-col">
             <div class="flex flex-col h-full">
-                <header class="mb-12 text-center md:text-left">
+                <header class="mb-8 text-center md:text-left">
                     <h1 class="text-3xl font-bold mb-2">Diego A. Pascual García</h1>
                     <p class="text-md text-gray-500">Artista Digital | Retratos y Pinturas</p>
-                    <p class="text-sm text-gray-600 italic mt-4">
-                        Mi trabajo reposa en la intuición. Busco un silencio visible en cada rostro, en cada paisaje. Es una imagen que te encuentra desde lejos, pero que se transforma y se desvanece si te acercas demasiado, invitando a sentir más que a entender.
-                    </p>
                 </header>
+                
                 <nav>
                     <ul class="space-y-4 text-center md:text-left">
-                        <li>
-                            <a href="#obras" id="obras-link" class="nav-link text-gray-600 hover:text-gray-900 active">Obras</a>
-                            <ul class="pl-4 mt-2 space-y-2 text-sm text-gray-500">
-                                <li><button id="filter-retrato" class="filter-btn active-filter">Retratos</button></li>
+                        <li><a href="#obras" id="obras-link" class="nav-link">Obras</a>
+                            <ul class="pl-4 mt-2 space-y-2 text-sm">
+                                <li><button id="filter-retrato" class="filter-btn">Retratos</button></li>
                                 <li><button id="filter-pintura" class="filter-btn">Pinturas</button></li>
                             </ul>
                         </li>
-                        <li><a href="#contacto" id="contacto-link" class="nav-link text-gray-600 hover:text-gray-900">Contacto</a></li>
+                        <li><a href="#sobre-mi" id="sobre-mi-link" class="nav-link">Sobre mí</a></li>
+                        <li><a href="#contacto" id="contacto-link" class="nav-link">Contacto</a></li>
                     </ul>
                 </nav>
-
-                <!-- Autorretrato centrado en la barra lateral --><div class="mt-8 pt-8 border-t border-gray-200 text-center"> <!-- Cambiado a text-center --><img src="https://i.postimg.cc/7ZfkwW46/Ilustracio-n-sin-ti-tulo-3.jpg" alt="Autorretrato del artista digital Diego A. Pascual García, ilustrador y pintor." class="rounded-full shadow-md w-2/3 mx-auto"> <!-- Añadido mx-auto para centrar --></div>
                 
-                <footer class="mt-auto text-center md:text-left pt-8">
+                <div class="flex-grow mt-8 text-left">
+                     <p class="text-xs text-gray-600 dark:text-gray-400 italic">
+                        "Mi trabajo reposa en la intuición. Busco un silencio visible en cada rostro, en cada paisaje. Es una imagen que te encuentra desde lejos, pero que se transforma y se desvanece si te acercas demasiado, invitando a sentir más que a entender."
+                    </p>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <img src="https://i.postimg.cc/7ZfkwW46/Ilustracio-n-sin-ti-tulo-3.jpg" alt="Autorretrato del artista digital Diego A. Pascual García" class="rounded-full shadow-md w-2/3 mx-auto">
+                </div>
+                
+                <footer class="mt-auto text-center md:text-left pt-8 flex justify-between items-center">
                     <p class="text-xs text-gray-400">&copy; 2024 D. A. Pascual García</p>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 8.486a1 1 0 011.414 0l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z"></path></svg>
+                    </button>
                 </footer>
             </div>
         </aside>
 
-        <!-- Contenido Principal --><main class="flex-1 md:ml-64 p-8 lg:p-12">
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-72 p-8 lg:p-12">
             
-            <!-- Sección de Obras (Galería) --><section id="obras-section">
-                <!-- CTT para pedir presupuesto --><div class="text-center mb-8">
-                    <a href="mailto:dapascualg@gmail.com?subject=Contacto desde tu portfolio" class="inline-block bg-orange-50 text-gray-800 hover:bg-orange-100 font-semibold py-2 px-5 rounded-md text-base transition-colors duration-300 shadow-sm hover:shadow-md">
+            <section id="obras-section">
+                <div class="text-center mb-8">
+                     <a href="mailto:dapascualg@gmail.com?subject=Contacto desde tu portfolio" class="inline-block bg-orange-50 text-gray-800 hover:bg-orange-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 font-semibold py-2 px-5 rounded-md text-base transition-colors duration-300 shadow-sm hover:shadow-md">
                         Contacta conmigo y cuéntame
                     </a>
                 </div>
-                <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Pinturas -->
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/MKG78GgC/La-Carpa.jpg" alt="Pintura digital de una carpa en estilo realista por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">La Carpa</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                            <img src="https://i.postimg.cc/Hsjyhh7F/Camping.jpg" alt="Pintura digital de una acampada nocturna por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Atardecer en Camping Pepe</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                            <img src="https://i.postimg.cc/3NNdzkWn/La-Bu-squeda.jpg" alt="Pintura digital 'La Búsqueda' por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">La Búsqueda</h3>
-                        </div>
-                    </div>
-                   <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/157DWg7p/Martina.jpg" alt="Pintura digital titulada Martina, arte por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Martina</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/25dGSKGQ/Pantano-de-Navacerrada.jpg" alt="Pintura digital del paisaje del Pantano de Navacerrada por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Pantano de Navacerrada</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/pL9gg5Qm/Ilustracio-n-sin-ti-tulo-2.jpg" alt="Ilustración digital de una mujer en un paisaje, por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Thank U 4 the music</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/mDSqQYRG/Ilustracio-n-sin-ti-tulo-1.jpg" alt="Pintura digital de un paisaje de carretera por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Yo te ayudo</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/L6571gWH/Foodtruck-junto-al-Duero.jpg" alt="Pintura digital de una foodtruck junto al río Duero por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Foodtruck junto al Duero</h3>
-                        </div>
-                    </div>
-                     <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/PqsF935t/Ilustracio-n-sin-ti-tulo.jpg" alt="Pintura digital de dos niños buceando por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Leo y Marco</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://placehold.co/400x400/cccccc/ffffff?text=Nueva+Pintura+1" alt="Espacio para nueva pintura digital por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Título de la obra</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="pintura">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://placehold.co/400x400/cccccc/ffffff?text=Nueva+Pintura+2" alt="Espacio para nueva pintura digital por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Título de la obra</h3>
-                        </div>
-                    </div>
-                    
-                    
-                    <!-- Retratos -->
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/QxWM5G7h/Cousteau.jpg" alt="Retrato digital de Jacques Cousteau, ilustración por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Jacques Cousteau</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/fLLzR6Zs/Aitana-Bonmati.jpg" alt="Retrato digital de la futbolista Aitana Bonmatí por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Aitana Bonmatí</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/tJ6Y9Ltn/Federico-G-Lorca.jpg" alt="Retrato digital del poeta Federico García Lorca, por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Federico García Lorca</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/P5QvpnGm/Ringo-Starr.jpg" alt="Retrato digital de Ringo Starr, batería de The Beatles, por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Ringo Starr</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/fTggGpq0/Morrisey.jpg" alt="Retrato digital del cantante Morrissey por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Morrissey</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/W3j9mvtt/Jimi-Hendrix.jpg" alt="Retrato digital del guitarrista Jimi Hendrix por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Jimi Hendrix</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/brV3jSgs/Yoko-Ono.jpg" alt="Retrato digital de la artista Yoko Ono por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Yoko Ono</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/PJkcDS0R/Gloria-Fuertes.jpg" alt="Retrato digital de la poeta Gloria Fuertes por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Gloria Fuertes</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/HLVf1cQw/The-Beatles.jpg" alt="Retrato digital del grupo The Beatles por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">The Beatles</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/MGCrksZW/Rosalia-1.jpg" alt="Retrato digital de la cantante Rosalía por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Rosalía</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/KvGpy3b0/Mc-Cartney-1.jpg" alt="Retrato digital de Paul McCartney por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Paul McCartney</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/0y8znxpv/Paco-De-Lucia.jpg" alt="Retrato digital del músico Paco de Lucía por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Paco de Lucía</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/wvsMMBdX/Karmelo-Iribarren.jpg" alt="Retrato digital del poeta Karmelo Iribarren por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Karmelo Iribarren</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/KcB4y4fZ/Antonio-Gamoneda.jpg" alt="Retrato digital del poeta Antonio Gamoneda por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Antonio Gamoneda</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/bwCwRnym/Guadalupe-Grande.jpg" alt="Retrato digital de la poeta Guadalupe Grande por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Guadalupe Grande</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/mrKZvGFc/Joaqui-n-Sabina.jpg" alt="Retrato digital del cantante Joaquín Sabina por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Joaquín Sabina</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/QCJXK9Yd/Camilo-Jose-Cela.jpg" alt="Retrato digital del escritor Camilo José Cela por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Camilo José Cela</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/gk4zYhZp/Silvia-Pe-rez-Cruz.jpg" alt="Retrato digital de la cantante Silvia Pérez Cruz por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Silvia Pérez Cruz</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/C1yYvHWK/Myriam-Rates.jpg" alt="Retrato digital de una mujer por Diego A. Pascual García" class="w-full h-full object-cover">
-                           <span class="sold-label">VENDIDO</span>
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Myriam Rates</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/7h9kZvbc/Ilustracio-n-sin-ti-tulo-4.jpg" alt="Retrato digital de una mujer con gafas por Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Obra en proceso</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/7ZfkwW46/Ilustracio-n-sin-ti-tulo-3.jpg" alt="Autorretrato digital del artista Diego A. Pascual García" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Autorretrato</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md" data-category="retrato">
-                        <div class="image-container cursor-pointer">
-                           <img src="https://i.postimg.cc/KjS7Hs2P/Skin.jpg" alt="Retrato digital de la cantante Skin por Diego A. Pascual García" class="w-full h-full object-cover">
-                           <span class="sold-label">VENDIDO</span>
-                        </div>
-                        <div class="p-3 text-center">
-                            <h3 class="font-semibold text-gray-800 text-sm">Skin</h3>
-                        </div>
-                    </div>
+                <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Gallery items will be populated by JS -->
                 </div>
             </section>
 
-            <!-- Sección de Contacto con imagen --><section id="contacto-section" class="hidden">
+            <section id="sobre-mi-section" class="hidden max-w-2xl mx-auto">
+                 <h2 class="text-4xl font-bold mb-8">Sobre mí</h2>
+                 <div class="space-y-6 text-base leading-relaxed"> <!-- Font size reduced here -->
+                     <p>El pintar y dibujar desde soporte de papel o lienzo hacia lenguaje digital, no ha sido más que un paso natural para encajar mi momento presente con mi forma de expresión personal.</p>
+                     <p>Todavía me debato entre la equivalencia de lenguajes, pero sale ganando el instinto de supervivencia: ahora es esto o dormirlo. De camino, descubro nuevas formas de traer al objeto lo intangible, y aquello que reposa en continuo movimiento.</p>
+                     <p>Los rostros, las miradas, los paisajes. Todo es lo mismo y todo es uno cuando ya no puedes mirar a otro lado.</p>
+                     <p>Si comparamos el lenguaje digital con la tablilla cuneiforme o las pinturas rupestres no encontramos manera de disociar una cosa de otra. Hay una necesidad por un lado, y una forma de plasmarlo, por otro. ¿Alguna es superior a la anterior? Y mucho más relevante: ¿Es tan importante decidirlo?</p>
+                 </div>
+            </section>
+
+            <section id="contacto-section" class="hidden">
                 <div class="max-w-xl text-center mx-auto">
                     <h2 class="text-4xl font-bold mb-6">Contacto</h2>
-                    <p class="text-lg text-gray-700 mb-8">
+                    <p class="text-lg mb-8">
                         Si te interesa mi trabajo, quieres encargar una obra o simplemente saludar, no dudes en escribirme.
                     </p>
-                    <a href="mailto:dapascualg@gmail.com" class="inline-block bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors duration-300">
+                    <a href="mailto:dapascualg@gmail.com" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors duration-300">
                         Enviar un correo
                     </a>
                     <div class="mt-12">
-                        <img src="https://i.postimg.cc/htYfPz5G/IMG-20251011-154641.jpg" alt="El artista digital Diego A. Pascual García trabajando en un retrato por encargo" class="rounded-lg shadow-xl mx-auto w-full max-w-xs opacity-80">
+                        <img src="https://i.postimg.cc/htYfPz5G/IMG-20251011-154641.jpg" alt="El artista trabajando en su estudio" class="rounded-lg shadow-xl mx-auto w-full max-w-xs opacity-80 dark:opacity-70">
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Modal para visualización de imágenes --><div id="imageModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center p-4 z-50 hidden opacity-0">
-        <span id="closeModal" class="absolute top-4 right-6 text-white text-4xl font-bold cursor-pointer hover:text-gray-400">&times;</span>
+    <!-- Modal -->
+    <div id="imageModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center p-4 z-50 hidden opacity-0">
+        <span id="closeModal" class="absolute top-4 right-6 text-white text-4xl font-bold hover:text-gray-400">&times;</span>
         <img id="modalImage" src="" alt="Vista ampliada de la obra" class="max-w-full max-h-full rounded-lg shadow-2xl">
     </div>
 
     <script>
+        const works = [
+            // Pinturas
+            { src: 'https://i.postimg.cc/MKG78GgC/La-Carpa.jpg', title: 'La Carpa', category: 'pintura', alt: 'Pintura digital de una carpa en estilo realista por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/Hsjyhh7F/Camping.jpg', title: 'Atardecer en Camping Pepe', category: 'pintura', alt: 'Pintura digital de una acampada nocturna por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/3NNdzkWn/La-Bu-squeda.jpg', title: 'La Búsqueda', category: 'pintura', alt: 'Pintura digital \'La Búsqueda\' por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/157DWg7p/Martina.jpg', title: 'Martina', category: 'pintura', alt: 'Pintura digital titulada Martina, arte por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/25dGSKGQ/Pantano-de-Navacerrada.jpg', title: 'Pantano de Navacerrada', category: 'pintura', alt: 'Pintura digital del paisaje del Pantano de Navacerrada por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/pL9gg5Qm/Ilustracio-n-sin-ti-tulo-2.jpg', title: 'Thank U 4 the music', category: 'pintura', alt: 'Ilustración digital de una mujer en un paisaje, por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/mDSqQYRG/Ilustracio-n-sin-ti-tulo-1.jpg', title: 'Yo te ayudo', category: 'pintura', alt: 'Pintura digital de un paisaje de carretera por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/L6571gWH/Foodtruck-junto-al-Duero.jpg', title: 'Foodtruck junto al Duero', category: 'pintura', alt: 'Pintura digital de una foodtruck junto al río Duero por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/PqsF935t/Ilustracio-n-sin-ti-tulo.jpg', title: 'Leo y Marco', category: 'pintura', alt: 'Pintura digital de dos niños buceando por Diego A. Pascual García' },
+            // Retratos
+            { src: 'https://i.postimg.cc/QxWM5G7h/Cousteau.jpg', title: 'Jacques Cousteau', category: 'retrato', alt: 'Retrato digital de Jacques Cousteau, ilustración por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/fLLzR6Zs/Aitana-Bonmati.jpg', title: 'Aitana Bonmatí', category: 'retrato', alt: 'Retrato digital de la futbolista Aitana Bonmatí por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/tJ6Y9Ltn/Federico-G-Lorca.jpg', title: 'Federico García Lorca', category: 'retrato', alt: 'Retrato digital del poeta Federico García Lorca, por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/P5QvpnGm/Ringo-Starr.jpg', title: 'Ringo Starr', category: 'retrato', alt: 'Retrato digital de Ringo Starr, batería de The Beatles, por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/fTggGpq0/Morrisey.jpg', title: 'Morrissey', category: 'retrato', alt: 'Retrato digital del cantante Morrissey por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/W3j9mvtt/Jimi-Hendrix.jpg', title: 'Jimi Hendrix', category: 'retrato', alt: 'Retrato digital del guitarrista Jimi Hendrix por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/brV3jSgs/Yoko-Ono.jpg', title: 'Yoko Ono', category: 'retrato', alt: 'Retrato digital de la artista Yoko Ono por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/PJkcDS0R/Gloria-Fuertes.jpg', title: 'Gloria Fuertes', category: 'retrato', alt: 'Retrato digital de la poeta Gloria Fuertes por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/HLVf1cQw/The-Beatles.jpg', title: 'The Beatles', category: 'retrato', alt: 'Retrato digital del grupo The Beatles por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/MGCrksZW/Rosalia-1.jpg', title: 'Rosalía', category: 'retrato', alt: 'Retrato digital de la cantante Rosalía por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/KvGpy3b0/Mc-Cartney-1.jpg', title: 'Paul McCartney', category: 'retrato', alt: 'Retrato digital de Paul McCartney por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/0y8znxpv/Paco-De-Lucia.jpg', title: 'Paco de Lucía', category: 'retrato', alt: 'Retrato digital del músico Paco de Lucía por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/wvsMMBdX/Karmelo-Iribarren.jpg', title: 'Karmelo Iribarren', category: 'retrato', alt: 'Retrato digital del poeta Karmelo Iribarren por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/KcB4y4fZ/Antonio-Gamoneda.jpg', title: 'Antonio Gamoneda', category: 'retrato', alt: 'Retrato digital del poeta Antonio Gamoneda por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/bwCwRnym/Guadalupe-Grande.jpg', title: 'Guadalupe Grande', category: 'retrato', alt: 'Retrato digital de la poeta Guadalupe Grande por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/mrKZvGFc/Joaqui-n-Sabina.jpg', title: 'Joaquín Sabina', category: 'retrato', alt: 'Retrato digital del cantante Joaquín Sabina por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/QCJXK9Yd/Camilo-Jose-Cela.jpg', title: 'Camilo José Cela', category: 'retrato', alt: 'Retrato digital del escritor Camilo José Cela por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/gk4zYhZp/Silvia-Pe-rez-Cruz.jpg', title: 'Silvia Pérez Cruz', category: 'retrato', alt: 'Retrato digital de la cantante Silvia Pérez Cruz por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/C1yYvHWK/Myriam-Rates.jpg', title: 'Myriam Rates', category: 'retrato', alt: 'Retrato digital de una mujer por Diego A. Pascual García', sold: true },
+            { src: 'https://i.postimg.cc/7h9kZvbc/Ilustracio-n-sin-ti-tulo-4.jpg', title: 'Obra en proceso', category: 'retrato', alt: 'Retrato digital de una mujer con gafas por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/7ZfkwW46/Ilustracio-n-sin-ti-tulo-3.jpg', title: 'Autorretrato', category: 'retrato', alt: 'Autorretrato digital del artista Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/KjS7Hs2P/Skin.jpg', title: 'Skin', category: 'retrato', alt: 'Retrato digital de la cantante Skin por Diego A. Pascual García', sold: true },
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Lógica para cambiar entre secciones
-            const links = {
-                obras: document.getElementById('obras-link'),
-                contacto: document.getElementById('contacto-link')
-            };
+            const gallery = document.getElementById('gallery');
             const sections = {
                 obras: document.getElementById('obras-section'),
+                'sobre-mi': document.getElementById('sobre-mi-section'),
                 contacto: document.getElementById('contacto-section')
             };
-
-            const showSection = (sectionId) => {
-                Object.values(sections).forEach(section => section.classList.add('hidden'));
-                sections[sectionId].classList.remove('hidden');
-
-                Object.values(links).forEach(link => link.classList.remove('active'));
-                links[sectionId].classList.add('active');
+            const links = {
+                obras: document.getElementById('obras-link'),
+                'sobre-mi': document.getElementById('sobre-mi-link'),
+                contacto: document.getElementById('contacto-link')
             };
-            
-            // Lógica de filtrado de la galería
             const filterButtons = {
                 retrato: document.getElementById('filter-retrato'),
                 pintura: document.getElementById('filter-pintura')
             };
-            const galleryItems = document.querySelectorAll('.gallery-item');
 
-            const filterGallery = (category) => {
-                // Actualizar estilo de botones
-                Object.values(filterButtons).forEach(btn => btn.classList.remove('active-filter'));
-                if (filterButtons[category]) {
-                    filterButtons[category].classList.add('active-filter');
-                }
+            // --- Theme Toggle ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
 
-                // Filtrar elementos
-                galleryItems.forEach(item => {
-                    const itemCategory = item.dataset.category;
-                    if (itemCategory === category) {
-                        item.classList.remove('hidden');
-                    } else {
-                        item.classList.add('hidden');
-                    }
-                });
+            // Correctly set initial icon state
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            } else {
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                // Toggle icons first
+                darkIcon.classList.toggle('hidden');
+                lightIcon.classList.toggle('hidden');
+
+                // then, toggle the theme
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+            });
+
+            // --- Navigation Logic ---
+            const showSection = (sectionId) => {
+                Object.values(sections).forEach(s => s.classList.add('hidden'));
+                if (sections[sectionId]) sections[sectionId].classList.remove('hidden');
+
+                Object.values(links).forEach(l => l.classList.remove('active'));
+                if (links[sectionId]) links[sectionId].classList.add('active');
             };
 
-            // Event listeners para los botones de filtro
+            Object.keys(links).forEach(key => {
+                links[key].addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(key);
+                    if (key === 'obras') {
+                        filterGallery('retrato');
+                    }
+                });
+            });
+
+            // --- Gallery Filtering and Rendering ---
+            const renderGallery = (items) => {
+                gallery.innerHTML = '';
+                items.forEach((work, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.dataset.category = work.category;
+                    item.style.animationDelay = `${index * 80}ms`;
+                    
+                    let soldLabel = work.sold ? '<span class="sold-label">VENDIDO</span>' : '';
+
+                    item.innerHTML = `
+                        <div class="image-container">
+                            ${soldLabel}
+                            <img src="${work.src}" alt="${work.alt}" class="w-full h-full object-cover">
+                            <div class="overlay">
+                                <svg class="overlay-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <h3 class="overlay-title">${work.title}</h3>
+                            </div>
+                        </div>
+                    `;
+                    gallery.appendChild(item);
+                });
+            };
+            
+            const filterGallery = (category) => {
+                const filteredWorks = works.filter(w => w.category === category);
+                renderGallery(filteredWorks);
+
+                Object.values(filterButtons).forEach(btn => btn.classList.remove('active-filter'));
+                if (filterButtons[category]) filterButtons[category].classList.add('active-filter');
+            };
+
             Object.keys(filterButtons).forEach(key => {
                 filterButtons[key].addEventListener('click', () => filterGallery(key));
             });
-            
-            // Event listeners para los enlaces principales
-            links.obras.addEventListener('click', (e) => {
-                e.preventDefault();
-                showSection('obras');
-                filterGallery('retrato'); // Resetea el filtro a 'retrato'
-            });
-            links.contacto.addEventListener('click', (e) => {
-                e.preventDefault();
-                showSection('contacto');
-            });
-            
-            // Lógica para el modal de la galería
-            const gallery = document.getElementById('gallery');
+
+            // --- Modal Logic ---
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const closeModalBtn = document.getElementById('closeModal');
-
+            
             gallery.addEventListener('click', (e) => {
-                // Asegurarse de que el elemento clicado es una imagen dentro de un item visible
                 const imageContainer = e.target.closest('.image-container');
                 if (imageContainer) {
                     const img = imageContainer.querySelector('img');
@@ -494,16 +382,16 @@
             };
 
             closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
+            modal.addEventListener('click', e => {
+                if (e.target === modal) closeModal();
             });
 
-            // Establece el estado inicial para mostrar solo los retratos al cargar
+            // Initial state
+            showSection('obras');
             filterGallery('retrato');
         });
     </script>
 
 </body>
 </html>
+
