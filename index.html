@@ -165,6 +165,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <li><button id="filter-pintura" class="filter-btn">Pinturas</button></li>
                             </ul>
                         </li>
+                        <li><a href="#exposiciones" id="exposiciones-link" class="nav-link">Exposiciones</a></li>
                         <li><a href="#sobre-mi" id="sobre-mi-link" class="nav-link">Sobre mí</a></li>
                         <li><a href="#contacto" id="contacto-link" class="nav-link">Contacto</a></li>
                     </ul>
@@ -202,6 +203,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Gallery items will be populated by JS -->
                 </div>
+            </section>
+            
+            <section id="exposiciones-section" class="hidden max-w-3xl mx-auto">
+                 <h2 class="text-4xl font-bold mb-8">Próximas exposiciones</h2>
+                 <div class="space-y-6">
+                     
+                     <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Centro Cultural Paco de Lucía</h3>
+                         <p class="text-orange-600 dark:text-orange-400 font-semibold mt-2">Del 4 al 29 de noviembre</p>
+                         <p class="text-gray-700 dark:text-gray-300 mt-2 font-medium">📍 Centro Cultural Paco de Lucía</p>
+                     </div>
+
+                     <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Bar La Caña</h3>
+                         <p class="text-orange-600 dark:text-orange-400 font-semibold mt-2">Mayo 2027</p>
+                         <p class="text-gray-700 dark:text-gray-300 mt-2 font-medium">📍 C/ Santa Isabel 50</p>
+                     </div>
+
+                     <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Casa Cultura Navacerrada</h3>
+                         <p class="text-orange-600 dark:text-orange-400 font-semibold mt-2">Julio 2027</p>
+                         <p class="text-gray-700 dark:text-gray-300 mt-2 font-medium">📍 Casa Cultura Navacerrada</p>
+                     </div>
+
+                     <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Madre Flaca Bar</h3>
+                         <p class="text-orange-600 dark:text-orange-400 font-semibold mt-2">Enero - Febrero 2028</p>
+                         <p class="text-gray-700 dark:text-gray-300 mt-2 font-medium">📍 C/ Olmo 26, Lavapiés</p>
+                     </div>
+
+                 </div>
             </section>
             
             <section id="sobre-mi-section" class="hidden max-w-2xl mx-auto">
@@ -278,11 +310,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             const gallery = document.getElementById('gallery');
             const sections = {
                 obras: document.getElementById('obras-section'),
+                exposiciones: document.getElementById('exposiciones-section'),
                 'sobre-mi': document.getElementById('sobre-mi-section'),
                 contacto: document.getElementById('contacto-section')
             };
             const links = {
                 obras: document.getElementById('obras-link'),
+                exposiciones: document.getElementById('exposiciones-link'),
                 'sobre-mi': document.getElementById('sobre-mi-link'),
                 contacto: document.getElementById('contacto-link')
             };
