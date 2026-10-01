@@ -452,4 +452,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     if (img) {
                         modalImage.src = img.src;
                         modal.classList.remove('hidden');
-                        setTimeout(() =>
+                        setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                    }
+                }
+            });
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            };
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', e => {
+                if (e.target === modal) closeModal();
+            });
+
+            // Initial state (Mostrar portada por defecto)
+            showSection('inicio');
+            filterGallery('retrato');
+        });
+    </script>
+
+</body>
+</html>
+   
