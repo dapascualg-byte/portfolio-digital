@@ -389,4 +389,196 @@
             { src: 'https://i.postimg.cc/QCJXK9Yd/Camilo-Jose-Cela.jpg', title: 'Camilo José Cela', category: 'retrato', size: '297 x 210mm', alt: 'Retrato digital del escritor Camilo José Cela por Diego A. Pascual García' },
             { src: 'https://i.postimg.cc/gk4zYhZp/Silvia-Pe-rez-Cruz.jpg', title: 'Silvia Pérez Cruz', category: 'retrato', size: '210 x 297mm', alt: 'Retrato digital de la cantante Silvia Pérez Cruz por Diego A. Pascual García' },
             { src: 'https://i.postimg.cc/C1yYvHWK/Myriam-Rates.jpg', title: 'Myriam Rates', category: 'retrato', size: '210 x 297mm', alt: 'Retrato digital de una mujer por Diego A. Pascual García', sold: true },
-            { src: 'https://i.postimg.cc/7h9kZvbc/Ilustracio-n-sin-ti-tulo-4.jpg', title: 'Obra en proceso', category: 'retrato', size: '210 x 2
+            { src: 'https://i.postimg.cc/7h9kZvbc/Ilustracio-n-sin-ti-tulo-4.jpg', title: 'Obra en proceso', category: 'retrato', size: '210 x 297mm', alt: 'Retrato digital de una mujer con gafas por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/7ZfkwW46/Ilustracio-n-sin-ti-tulo-3.jpg', title: 'Autorretrato', category: 'retrato', size: '210 x 297mm', alt: 'Autorretrato digital del artista Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/KjS7Hs2P/Skin.jpg', title: 'Skin', category: 'retrato', size: '210 x 297mm', alt: 'Retrato digital de la cantante Skin por Diego A. Pascual García', sold: true },
+            { src: 'https://i.postimg.cc/d18TSLFp/Natalia-Lafourcade.jpg', title: 'Natalia Lafourcade', category: 'retrato', size: '39 x 50cm', alt: 'Retrato digital de Natalia Lafourcade por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/rw0DyBTZ/Malala-Yousafzai.jpg', title: 'Malala Yousafzai', category: 'retrato', size: '39 x 50cm', alt: 'Retrato digital de Malala Yousafzai por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/d3c9SG7Q/Bowie.jpg', title: 'David Bowie', category: 'retrato', size: 'A4', alt: 'Retrato digital de David Bowie por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/2yWK1zW9/Martes-y-13-A2.jpg', title: 'Martes y Trece', category: 'retrato', size: 'A2', alt: 'Retrato digital de Martes y Trece por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/sXNcPtz5/Lennon-A3.jpg', title: 'John Lennon', category: 'retrato', size: 'A3', alt: 'Retrato digital de John Lennon por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/R0mbN5CQ/Antonio-Lopez.jpg', title: 'Antonio López', category: 'retrato', size: 'A4', alt: 'Retrato digital de Antonio López por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/wjMjZZY1/Miliki.jpg', title: 'Miliki', category: 'retrato', size: 'A4', alt: 'Retrato digital de Miliki por Diego A. Pascual García' },
+            { src: 'https://i.postimg.cc/pXt8N2sp/Krahe.jpg', title: 'Javier Krahe', category: 'retrato', size: 'A4', alt: 'Retrato digital de Javier Krahe por Diego A. Pascual García' },
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const gallery = document.getElementById('gallery');
+            const sections = {
+                inicio: document.getElementById('inicio-section'),
+                obras: document.getElementById('obras-section'),
+                'exposicion-paco': document.getElementById('exposicion-paco-section'),
+                exposiciones: document.getElementById('exposiciones-section'),
+                'sobre-mi': document.getElementById('sobre-mi-section'),
+                contacto: document.getElementById('contacto-section')
+            };
+            const links = {
+                inicio: document.getElementById('inicio-link'),
+                obras: document.getElementById('obras-link'),
+                'exposicion-paco': document.getElementById('exposicion-paco-link'),
+                exposiciones: document.getElementById('exposiciones-link'),
+                'sobre-mi': document.getElementById('sobre-mi-link'),
+                contacto: document.getElementById('contacto-link')
+            };
+            const filterButtons = {
+                retrato: document.getElementById('filter-retrato'),
+                pintura: document.getElementById('filter-pintura')
+            };
+
+            // Botón de entrar desde el inicio
+            const btnEntrar = document.getElementById('btn-entrar');
+            if (btnEntrar) {
+                btnEntrar.addEventListener('click', () => {
+                    showSection('obras');
+                    filterGallery('retrato');
+                });
+            }
+
+            // --- Theme Toggle ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                if(lightIcon) lightIcon.classList.remove('hidden');
+                if(darkIcon) darkIcon.classList.add('hidden');
+            } else {
+                if(darkIcon) darkIcon.classList.remove('hidden');
+                if(lightIcon) lightIcon.classList.add('hidden');
+            }
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    if(darkIcon) darkIcon.classList.toggle('hidden');
+                    if(lightIcon) lightIcon.classList.toggle('hidden');
+                    const isDark = document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+                });
+            }
+
+            // --- Navigation Logic ---
+            const showSection = (sectionId) => {
+                Object.values(sections).forEach(s => {
+                    if (s) s.classList.add('hidden');
+                });
+                if (sections[sectionId]) sections[sectionId].classList.remove('hidden');
+
+                Object.values(links).forEach(l => {
+                    if (l) l.classList.remove('active');
+                });
+                if (links[sectionId]) links[sectionId].classList.add('active');
+            };
+
+            Object.keys(links).forEach(key => {
+                if (links[key]) {
+                    links[key].addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const href = e.currentTarget.getAttribute('href');
+                        const sectionId = href.substring(1);
+                        showSection(sectionId);
+                        if (sectionId === 'obras') {
+                           filterGallery('retrato');
+                        }
+                    });
+                }
+            });
+
+            // --- Gallery Filtering and Rendering ---
+            const renderGallery = (items) => {
+                if (!gallery) return;
+                gallery.innerHTML = '';
+                items.forEach((work, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.dataset.category = work.category;
+                    item.style.animationDelay = `${index * 60}ms`;
+                    
+                    let soldLabel = work.sold ? '<span class="sold-label">VENDIDO</span>' : '';
+                    let sizeInfo = work.size ? `<p class="mt-1 text-xs opacity-80">${work.size}</p>` : '';
+
+                    item.innerHTML = `
+                        <div class="image-container rounded shadow-sm">
+                            <div class="no-download-overlay"></div>
+                            ${soldLabel}
+                            <img src="${work.src}" alt="${work.alt}" class="w-full h-full object-cover" draggable="false">
+                            <div class="overlay">
+                                <svg class="overlay-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <h3 class="overlay-title">${work.title}</h3>
+                                ${sizeInfo}
+                            </div>
+                        </div>
+                    `;
+                    gallery.appendChild(item);
+                });
+            };
+            
+            const filterGallery = (category) => {
+                const filteredWorks = works.filter(w => w.category === category);
+                renderGallery(filteredWorks);
+
+                Object.values(filterButtons).forEach(btn => {
+                    if (btn) btn.classList.remove('active-filter');
+                });
+                if (filterButtons[category]) filterButtons[category].classList.add('active-filter');
+            };
+
+            Object.keys(filterButtons).forEach(key => {
+                if (filterButtons[key]) {
+                    filterButtons[key].addEventListener('click', () => filterGallery(key));
+                }
+            });
+
+            // --- Modal Logic ---
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeModalBtn = document.getElementById('closeModal');
+            
+            if (gallery) {
+                gallery.addEventListener('click', (e) => {
+                    const imageContainer = e.target.closest('.image-container');
+                    if (imageContainer) {
+                        const img = imageContainer.querySelector('img');
+                        if (img && modal && modalImage) {
+                            modalImage.src = img.src;
+                            modal.classList.remove('hidden');
+                            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                        }
+                    }
+                });
+            }
+
+            const expoSection = document.getElementById('exposicion-paco-section');
+            if (expoSection) {
+                expoSection.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('expo-img') || e.target.tagName === 'IMG') {
+                        if (modal && modalImage) {
+                            modalImage.src = e.target.src;
+                            modal.classList.remove('hidden');
+                            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                        }
+                    }
+                });
+            }
+
+            const closeModal = () => {
+                if (modal) {
+                    modal.classList.add('opacity-0');
+                    setTimeout(() => modal.classList.add('hidden'), 300);
+                }
+            };
+
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+            if (modal) {
+                modal.addEventListener('click', e => {
+                    if (e.target === modal) closeModal();
+                });
+            }
+
+            // Initial state (Mostrar portada por defecto)
+            showSection('inicio');
+            filterGallery('retrato');
+        });
+    </script>
+</body>
+</html>
