@@ -239,7 +239,7 @@
                 </div>
             </section>
             
-            <!-- SECCIÓN: FOTOGRAFÍAS DE LA EXPO EN PACO DE LUCÍA (Sin zoom al hacer clic) -->
+            <!-- SECCIÓN: FOTOGRAFÍAS DE LA EXPO EN PACO DE LUCÍA (Con zoom al hacer clic) -->
             <section id="exposicion-paco-section" class="hidden max-w-5xl mx-auto">
                  <h2 class="text-4xl font-bold mb-4">Exposición "La Forma de la Mirada"</h2>
                  <p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">Centro Cultural Paco de Lucía (Del 4 al 26 de noviembre)</p>
@@ -247,45 +247,45 @@
                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                      <!-- Foto 1 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative">
+                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/v80J9v04/1000128063.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover" draggable="false">
+                             <img src="https://i.postimg.cc/v80J9v04/1000128063.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
                          <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 2 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative">
+                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/GhZSJgGT/IMG-0047.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover" draggable="false">
+                             <img src="https://i.postimg.cc/GhZSJgGT/IMG-0047.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
                          <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 3 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative">
+                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/SKGT4y5N/IMG-0049.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover" draggable="false">
+                             <img src="https://i.postimg.cc/SKGT4y5N/IMG-0049.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
                          <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 4 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative">
+                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/br4LgdDX/1000128062.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover" draggable="false">
+                             <img src="https://i.postimg.cc/br4LgdDX/1000128062.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
                          <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 5 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative">
+                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/t4Q2VZGh/IMG-0048.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover" draggable="false">
+                             <img src="https://i.postimg.cc/t4Q2VZGh/IMG-0048.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
                          <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
@@ -349,10 +349,10 @@
         </main>
     </div>
 
-    <!-- Modal para ampliar imágenes (solo para la galería de obras) -->
+    <!-- Modal para ampliar imágenes -->
     <div id="imageModal" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center p-4 z-50 hidden opacity-0">
         <span id="closeModal" class="absolute top-4 right-6 text-white text-4xl font-bold hover:text-gray-400 cursor-pointer">&times;</span>
-        <img id="modalImage" src="" alt="Vista ampliada de la obra" class="max-w-full max-h-full rounded-lg shadow-2xl" draggable="false">
+        <img id="modalImage" src="" alt="Vista ampliada" class="max-w-full max-h-full rounded-lg shadow-2xl" draggable="false">
     </div>
 
     <script>
@@ -527,7 +527,7 @@
                 }
             });
 
-            // --- Modal Logic (Solo para la galería de obras) ---
+            // --- Modal Logic (Para obras y para las fotos de la exposición) ---
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const closeModalBtn = document.getElementById('closeModal');
@@ -537,6 +537,22 @@
                     const imageContainer = e.target.closest('.image-container');
                     if (imageContainer) {
                         const img = imageContainer.querySelector('img');
+                        if (img && modal && modalImage) {
+                            modalImage.src = img.src;
+                            modal.classList.remove('hidden');
+                            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                        }
+                    }
+                });
+            }
+
+            // Habilitar el zoom también en las fotos de la sección de exposición
+            const expoSection = document.getElementById('exposicion-paco-section');
+            if (expoSection) {
+                expoSection.addEventListener('click', (e) => {
+                    const container = e.target.closest('.expo-container');
+                    if (container) {
+                        const img = container.querySelector('img');
                         if (img && modal && modalImage) {
                             modalImage.src = img.src;
                             modal.classList.remove('hidden');
