@@ -11,7 +11,7 @@
     })(window,document,'script','dataLayer','GTM-MGGVRJLC');</script>
     <!-- End Google Tag Manager -->
     <title>Diego A. Pascual García | Artista Digital - Galería de retratos y pinturas digitales</title>
-    <meta name="description" content="Portfolio del artista digital Diego A. Pascual García. Descubre sus retratos y pinturas digitales, y encarga una obra de arte personalizada.">
+    <meta name="description" content="Portfolio del artista digital Diego A. Pascual García. Explora su galería de retratos y pinturas digitales y sus exposiciones de arte.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -231,7 +231,7 @@
             <section id="obras-section" class="hidden">
                 <div class="text-center mb-8">
                      <a href="mailto:dapascualg@gmail.com?subject=Contacto desde tu portfolio" class="inline-block bg-orange-50 text-gray-800 hover:bg-orange-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 font-semibold py-2 px-5 rounded-md text-base transition-colors duration-300 shadow-sm hover:shadow-md">
-                        Contacta conmigo y cuéntame
+                        Ponerse en contacto con el artista
                     </a>
                 </div>
                 <div id="gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -239,7 +239,7 @@
                 </div>
             </section>
             
-            <!-- SECCIÓN: FOTOGRAFÍAS DE LA EXPO EN PACO DE LUCÍA (Con zoom al hacer clic) -->
+            <!-- SECCIÓN: FOTOGRAFÍAS DE LA EXPO EN PACO DE LUCÍA -->
             <section id="exposicion-paco-section" class="hidden max-w-5xl mx-auto">
                  <h2 class="text-4xl font-bold mb-4">Exposición "La Forma de la Mirada"</h2>
                  <p class="text-gray-600 dark:text-gray-400 mb-8 text-lg">Centro Cultural Paco de Lucía (Del 4 al 26 de noviembre)</p>
@@ -337,7 +337,7 @@
             <section id="contacto-section" class="hidden">
                 <div class="max-w-xl text-center mx-auto">
                     <h2 class="text-4xl font-bold mb-6">Contacto</h2>
-                    <p class="text-lg mb-8">Si te interesa mi trabajo, quieres encargar una obra o simplemente saludar, no dudes en escribirme.</p>
+                    <p class="text-lg mb-8">Si te interesa mi trabajo, quieres comentar alguna de las obras o simplemente saludar, no dudes en escribirme.</p>
                     <a href="mailto:dapascualg@gmail.com" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors duration-300">
                         Enviar un correo
                     </a>
@@ -527,7 +527,7 @@
                 }
             });
 
-            // --- Modal Logic (Para obras y para las fotos de la exposición) ---
+            // --- Modal Logic ---
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const closeModalBtn = document.getElementById('closeModal');
@@ -546,7 +546,6 @@
                 });
             }
 
-            // Habilitar el zoom también en las fotos de la sección de exposición
             const expoSection = document.getElementById('exposicion-paco-section');
             if (expoSection) {
                 expoSection.addEventListener('click', (e) => {
