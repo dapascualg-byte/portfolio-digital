@@ -273,11 +273,11 @@
                  <h2 class="text-4xl font-bold mb-2">Exposición "La Forma de la Mirada"</h2>
                  <p class="text-gray-600 dark:text-gray-400 mb-6 text-lg">Centro Cultural Paco de Lucía (Del 4 al 26 de noviembre)</p>
 
-                 <!-- Difusión institucional y prensa destacada -->
+                 <!-- Difusión institucional, prensa y libro de visitas -->
                  <div class="mb-8 p-5 rounded-xl bg-orange-50/80 dark:bg-gray-800 border border-orange-200/80 dark:border-gray-700 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                      <div>
-                         <span class="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400">Difusión y prensa</span>
-                         <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Consulta la ficha oficial y la reseña de la muestra en medios:</p>
+                         <span class="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400">Difusión, prensa y libro de visitas</span>
+                         <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Ficha oficial, reseña en prensa y primera página del libro de visitas:</p>
                      </div>
                      <div class="flex flex-wrap gap-3 shrink-0">
                          <a href="https://www.madrid.es/portales/munimadrid/es/Inicio/El-Ayuntamiento/Latina/La-forma-de-la-memoria/?vgnextfmt=default&vgnextoid=d4e06b6370781a10VgnVCM100000891ecb1aRCRD&vgnextchannel=a83aca5d5fb96010VgnVCM100000dc0ca8c0RCRD" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 dark:bg-orange-50 dark:hover:bg-orange-100 text-white dark:text-gray-900 font-semibold text-sm py-2.5 px-4 rounded-md shadow-sm transition-colors duration-300">
@@ -288,6 +288,10 @@
                              <span>Madrid Informa</span>
                              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                          </a>
+                         <button type="button" id="btn-libro-visitas" data-img="https://files.catbox.moe/q2yoo7.jpg" class="inline-flex items-center gap-2 bg-orange-100 hover:bg-orange-200 dark:bg-orange-950/60 dark:hover:bg-orange-900/60 text-orange-950 dark:text-orange-200 font-semibold text-sm py-2.5 px-4 rounded-md border border-orange-300/80 dark:border-orange-800/70 shadow-sm transition-colors duration-300 cursor-pointer">
+                             <span>Libro de visitas (1.ª página)</span>
+                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                         </button>
                      </div>
                  </div>
                  
@@ -636,17 +640,21 @@
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
             const closeModalBtn = document.getElementById('closeModal');
+
+            const openModalWithSrc = (src) => {
+                if (src && modal && modalImage) {
+                    modalImage.src = src;
+                    modal.classList.remove('hidden');
+                    setTimeout(() => modal.classList.remove('opacity-0'), 10);
+                }
+            };
             
             if (gallery) {
                 gallery.addEventListener('click', (e) => {
                     const imageContainer = e.target.closest('.image-container');
                     if (imageContainer) {
                         const img = imageContainer.querySelector('img');
-                        if (img && modal && modalImage) {
-                            modalImage.src = img.src;
-                            modal.classList.remove('hidden');
-                            setTimeout(() => modal.classList.remove('opacity-0'), 10);
-                        }
+                        if (img) openModalWithSrc(img.src);
                     }
                 });
             }
@@ -657,12 +665,15 @@
                     const container = e.target.closest('.expo-container');
                     if (container) {
                         const img = container.querySelector('img');
-                        if (img && modal && modalImage) {
-                            modalImage.src = img.src;
-                            modal.classList.remove('hidden');
-                            setTimeout(() => modal.classList.remove('opacity-0'), 10);
-                        }
+                        if (img) openModalWithSrc(img.src);
                     }
+                });
+            }
+
+            const btnLibroVisitas = document.getElementById('btn-libro-visitas');
+            if (btnLibroVisitas) {
+                btnLibroVisitas.addEventListener('click', () => {
+                    openModalWithSrc(btnLibroVisitas.dataset.img);
                 });
             }
 
