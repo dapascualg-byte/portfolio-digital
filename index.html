@@ -182,8 +182,8 @@
                         <li><a href="#inicio" id="inicio-link" class="nav-link">Inicio</a></li>
                         <li><a href="#obras" id="obras-link" class="nav-link">Obras</a>
                             <ul class="pl-4 mt-2 space-y-2 text-sm">
-                                <li><button id="filter-retrato" class="filter-btn">Retratos</button></li>
-                                <li><button id="filter-pintura" class="filter-btn">Pinturas</button></li>
+                                <li><button id="filter-retrato" class="filter-btn cursor-pointer">Retratos</button></li>
+                                <li><button id="filter-pintura" class="filter-btn cursor-pointer">Pinturas</button></li>
                             </ul>
                         </li>
                         <li><a href="#exposicion-paco" id="exposicion-paco-link" class="nav-link">Expo Paco de Lucía</a></li>
@@ -624,7 +624,11 @@
 
             Object.keys(filterButtons).forEach(key => {
                 if (filterButtons[key]) {
-                    filterButtons[key].addEventListener('click', () => filterGallery(key));
+                    filterButtons[key].addEventListener('click', () => {
+                        showSection('obras');
+                        if (links.obras) links.obras.classList.add('active');
+                        filterGallery(key);
+                    });
                 }
             });
 
