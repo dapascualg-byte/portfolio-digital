@@ -146,6 +146,25 @@
             z-index: 10;
         }
 
+        /* Libro de visitas - Efecto de paso de página con puntero */
+        .guestbook-stage {
+            perspective: 1600px;
+            touch-action: pan-y;
+        }
+        .guestbook-page {
+            transform-origin: left center;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease, opacity 0.35s ease;
+            backface-visibility: hidden;
+            will-change: transform;
+        }
+        .guestbook-page.dragging {
+            transition: none;
+        }
+        .guestbook-spine-shadow {
+            background: linear-gradient(90deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 8%, rgba(255,255,255,0.08) 16%, transparent 35%);
+            pointer-events: none;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
@@ -277,7 +296,7 @@
                  <div class="mb-8 p-5 rounded-xl bg-orange-50/80 dark:bg-gray-800 border border-orange-200/80 dark:border-gray-700 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                      <div>
                          <span class="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400">Difusión, prensa y libro de visitas</span>
-                         <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Ficha oficial, reseña en prensa y primera página del libro de visitas:</p>
+                         <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">Ficha oficial, reseña en prensa y dedicatorias del libro de visitas:</p>
                      </div>
                      <div class="flex flex-wrap gap-3 shrink-0">
                          <a href="https://www.madrid.es/portales/munimadrid/es/Inicio/El-Ayuntamiento/Latina/La-forma-de-la-memoria/?vgnextfmt=default&vgnextoid=d4e06b6370781a10VgnVCM100000891ecb1aRCRD&vgnextchannel=a83aca5d5fb96010VgnVCM100000dc0ca8c0RCRD" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 dark:bg-orange-50 dark:hover:bg-orange-100 text-white dark:text-gray-900 font-semibold text-sm py-2.5 px-4 rounded-md shadow-sm transition-colors duration-300">
@@ -288,9 +307,9 @@
                              <span>Madrid Informa</span>
                              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                          </a>
-                         <button type="button" id="btn-libro-visitas" data-img="https://files.catbox.moe/q2yoo7.jpg" class="inline-flex items-center gap-2 bg-orange-100 hover:bg-orange-200 dark:bg-orange-950/60 dark:hover:bg-orange-900/60 text-orange-950 dark:text-orange-200 font-semibold text-sm py-2.5 px-4 rounded-md border border-orange-300/80 dark:border-orange-800/70 shadow-sm transition-colors duration-300 cursor-pointer">
-                             <span>Libro de visitas (1.ª página)</span>
-                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                         <button type="button" id="btn-libro-visitas" class="inline-flex items-center gap-2 bg-orange-100 hover:bg-orange-200 dark:bg-orange-950/60 dark:hover:bg-orange-900/60 text-orange-950 dark:text-orange-200 font-semibold text-sm py-2.5 px-4 rounded-md border border-orange-300/80 dark:border-orange-800/70 shadow-sm transition-colors duration-300 cursor-pointer">
+                             <span>Libro de visitas (5 págs.)</span>
+                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                          </button>
                      </div>
                  </div>
@@ -298,65 +317,74 @@
                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                      <!-- Foto 1 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/v80J9v04/1000128063.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://i.postimg.cc/v80J9v04/1000128063.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
-                         <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 2 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/GhZSJgGT/IMG-0047.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://i.postimg.cc/GhZSJgGT/IMG-0047.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
-                         <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 3 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/SKGT4y5N/IMG-0049.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://i.postimg.cc/SKGT4y5N/IMG-0049.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
-                         <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 4 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/br4LgdDX/1000128062.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://i.postimg.cc/br4LgdDX/1000128062.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
-                         <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 5 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/t4Q2VZGh/IMG-0048.jpg" alt="Detalle de la exposición" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://i.postimg.cc/t4Q2VZGh/IMG-0048.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
-                         <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Detalle de la exposición</p>
                      </div>
 
                      <!-- Foto 6 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/02B0j3dh/Pareja-contemplando-fotografias-en-la-exposicion.png" alt="Día de la inauguración" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://i.postimg.cc/02B0j3dh/Pareja-contemplando-fotografias-en-la-exposicion.png" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
-                         <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Día de la inauguración</p>
                      </div>
 
                      <!-- Foto 7 -->
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
-                         <div class="aspect-4/3 overflow-hidden rounded-md mb-2 bg-gray-100 relative cursor-pointer expo-container">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://i.postimg.cc/8P2fqVmq/Conversaciones-bajo-focos-en-la-galeria.png" alt="Día de la inauguración" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://i.postimg.cc/8P2fqVmq/Conversaciones-bajo-focos-en-la-galeria.png" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
-                         <p class="text-sm text-center font-medium text-gray-700 dark:text-gray-300">Día de la inauguración</p>
+                     </div>
+
+                     <!-- Foto 8 -->
+                     <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
+                             <div class="no-download-overlay"></div>
+                             <img src="https://files.catbox.moe/mvf9fo.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                         </div>
+                     </div>
+
+                     <!-- Foto 9 -->
+                     <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
+                         <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
+                             <div class="no-download-overlay"></div>
+                             <img src="https://files.catbox.moe/1zoxk6.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                         </div>
                      </div>
                  </div>
             </section>
@@ -424,6 +452,46 @@
         <img id="modalImage" src="" alt="Vista ampliada" class="max-w-full max-h-full rounded-lg shadow-2xl" draggable="false">
     </div>
 
+    <!-- Modal interactivo del Libro de Visitas (pasar páginas con puntero) -->
+    <div id="guestbookModal" class="fixed inset-0 bg-black/85 flex flex-col justify-center items-center p-4 z-50 hidden opacity-0 transition-opacity duration-300">
+        <div class="w-full max-w-3xl flex items-center justify-between text-white mb-3 px-1">
+            <div>
+                <h3 class="text-base sm:text-lg font-bold">Libro de visitas · "La Forma de la Mirada"</h3>
+                <p class="text-xs text-gray-300">Arrastra la hoja hacia la izquierda o derecha con el puntero para pasar de página</p>
+            </div>
+            <button type="button" id="closeGuestbook" class="text-white text-3xl sm:text-4xl font-bold hover:text-gray-300 leading-none cursor-pointer px-2">&times;</button>
+        </div>
+
+        <div id="guestbookStage" class="guestbook-stage relative w-full max-w-3xl h-[65vh] sm:h-[72vh] flex items-center justify-center select-none">
+            <!-- Página siguiente (fondo) -->
+            <div id="gbUnderPage" class="absolute inset-0 flex items-center justify-center rounded-r-xl rounded-l-sm bg-stone-100 shadow-inner overflow-hidden opacity-0 pointer-events-none">
+                <img id="gbUnderImg" src="" alt="" class="max-w-full max-h-full object-contain" draggable="false">
+                <div class="guestbook-spine-shadow absolute inset-0"></div>
+            </div>
+
+            <!-- Página activa arrastrable -->
+            <div id="gbActivePage" class="guestbook-page relative w-full h-full flex items-center justify-center rounded-r-xl rounded-l-sm bg-stone-50 shadow-2xl overflow-hidden cursor-grab active:cursor-grabbing">
+                <div class="no-download-overlay"></div>
+                <img id="gbActiveImg" src="" alt="Página del libro de visitas" class="max-w-full max-h-full object-contain pointer-events-none" draggable="false">
+                <div class="guestbook-spine-shadow absolute inset-0"></div>
+                <div class="absolute bottom-3 right-3 bg-black/60 text-white text-[11px] px-2.5 py-1 rounded-full pointer-events-none">
+                    Arrastra para pasar hoja ⇄
+                </div>
+            </div>
+        </div>
+
+        <!-- Controles inferiores -->
+        <div class="mt-4 flex items-center gap-4 text-white">
+            <button type="button" id="gbPrevBtn" class="px-4 py-2 rounded-md bg-white/15 hover:bg-white/25 disabled:opacity-35 disabled:pointer-events-none text-sm font-semibold transition-colors cursor-pointer">
+                ← Anterior
+            </button>
+            <span id="gbCounter" class="text-sm font-medium tabular-nums min-w-[110px] text-center">Página 1 de 5</span>
+            <button type="button" id="gbNextBtn" class="px-4 py-2 rounded-md bg-white/15 hover:bg-white/25 disabled:opacity-35 disabled:pointer-events-none text-sm font-semibold transition-colors cursor-pointer">
+                Siguiente →
+            </button>
+        </div>
+    </div>
+
     <script>
         const works = [
             // Pinturas
@@ -469,6 +537,14 @@
             { src: 'https://i.postimg.cc/pXt8N2sp/Krahe.jpg', title: 'Javier Krahe', category: 'retrato', size: 'A4', alt: 'Retrato digital de Javier Krahe por Diego A. Pascual García' },
         ];
 
+        const guestbookPages = [
+            'https://files.catbox.moe/q2yoo7.jpg',
+            'https://files.catbox.moe/6naltd.jpg',
+            'https://files.catbox.moe/r70jav.jpg',
+            'https://files.catbox.moe/fbjys4.jpg',
+            'https://files.catbox.moe/b5qt31.jpg'
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             const gallery = document.getElementById('gallery');
             const sections = {
@@ -496,7 +572,7 @@
             const updateCountdown = () => {
                 const now = new Date();
                 let targetYear = now.getFullYear();
-                let targetDate = new Date(targetYear, 10, 26, 14, 0, 0); // Mes 10 = noviembre
+                let targetDate = new Date(targetYear, 10, 26, 14, 0, 0);
 
                 const diff = targetDate.getTime() - now.getTime();
                 const gridEl = document.getElementById('countdown-grid');
@@ -670,13 +746,6 @@
                 });
             }
 
-            const btnLibroVisitas = document.getElementById('btn-libro-visitas');
-            if (btnLibroVisitas) {
-                btnLibroVisitas.addEventListener('click', () => {
-                    openModalWithSrc(btnLibroVisitas.dataset.img);
-                });
-            }
-
             const closeModal = () => {
                 if (modal) {
                     modal.classList.add('opacity-0');
@@ -690,6 +759,169 @@
                     if (e.target === modal) closeModal();
                 });
             }
+
+            // --- Libro de Visitas interactivo (paso de página con puntero) ---
+            const guestbookModal = document.getElementById('guestbookModal');
+            const closeGuestbookBtn = document.getElementById('closeGuestbook');
+            const btnLibroVisitas = document.getElementById('btn-libro-visitas');
+            const gbActivePage = document.getElementById('gbActivePage');
+            const gbActiveImg = document.getElementById('gbActiveImg');
+            const gbUnderPage = document.getElementById('gbUnderPage');
+            const gbUnderImg = document.getElementById('gbUnderImg');
+            const gbPrevBtn = document.getElementById('gbPrevBtn');
+            const gbNextBtn = document.getElementById('gbNextBtn');
+            const gbCounter = document.getElementById('gbCounter');
+
+            let currentPage = 0;
+            let isDragging = false;
+            let startX = 0;
+            let currentDeltaX = 0;
+            let isAnimatingPage = false;
+
+            const updateGuestbookUI = () => {
+                if (gbActiveImg) gbActiveImg.src = guestbookPages[currentPage];
+                if (gbCounter) gbCounter.textContent = `Página ${currentPage + 1} de ${guestbookPages.length}`;
+                if (gbPrevBtn) gbPrevBtn.disabled = currentPage === 0;
+                if (gbNextBtn) gbNextBtn.disabled = currentPage === guestbookPages.length - 1;
+                if (gbActivePage) {
+                    gbActivePage.classList.remove('dragging');
+                    gbActivePage.style.transform = 'rotateY(0deg) translateX(0px)';
+                    gbActivePage.style.opacity = '1';
+                    gbActivePage.style.boxShadow = '';
+                }
+                if (gbUnderPage) {
+                    gbUnderPage.style.opacity = '0';
+                }
+            };
+
+            const turnPage = (direction) => {
+                if (isAnimatingPage) return;
+                const targetIndex = currentPage + direction;
+                if (targetIndex < 0 || targetIndex >= guestbookPages.length) {
+                    updateGuestbookUI();
+                    return;
+                }
+
+                isAnimatingPage = true;
+                if (gbUnderImg && gbUnderPage) {
+                    gbUnderImg.src = guestbookPages[targetIndex];
+                    gbUnderPage.style.opacity = '1';
+                }
+
+                if (gbActivePage) {
+                    gbActivePage.classList.remove('dragging');
+                    if (direction > 0) {
+                        // Pasar hoja hacia adelante (giro desde el lomo izquierdo)
+                        gbActivePage.style.transform = 'rotateY(-105deg) translateX(-40px)';
+                        gbActivePage.style.opacity = '0';
+                    } else {
+                        // Retroceder hoja
+                        gbActivePage.style.transform = 'translateX(65%) rotateY(15deg)';
+                        gbActivePage.style.opacity = '0';
+                    }
+                }
+
+                setTimeout(() => {
+                    currentPage = targetIndex;
+                    updateGuestbookUI();
+                    isAnimatingPage = false;
+                }, 420);
+            };
+
+            if (btnLibroVisitas && guestbookModal) {
+                btnLibroVisitas.addEventListener('click', () => {
+                    currentPage = 0;
+                    updateGuestbookUI();
+                    guestbookModal.classList.remove('hidden');
+                    setTimeout(() => guestbookModal.classList.remove('opacity-0'), 10);
+                });
+            }
+
+            const closeGuestbook = () => {
+                if (guestbookModal) {
+                    guestbookModal.classList.add('opacity-0');
+                    setTimeout(() => guestbookModal.classList.add('hidden'), 300);
+                }
+            };
+
+            if (closeGuestbookBtn) closeGuestbookBtn.addEventListener('click', closeGuestbook);
+            if (guestbookModal) {
+                guestbookModal.addEventListener('click', (e) => {
+                    if (e.target === guestbookModal) closeGuestbook();
+                });
+            }
+
+            if (gbPrevBtn) gbPrevBtn.addEventListener('click', () => turnPage(-1));
+            if (gbNextBtn) gbNextBtn.addEventListener('click', () => turnPage(1));
+
+            // Arrastre con puntero / ratón / dedo para pasar la hoja
+            if (gbActivePage) {
+                gbActivePage.addEventListener('pointerdown', (e) => {
+                    if (isAnimatingPage) return;
+                    isDragging = true;
+                    startX = e.clientX;
+                    currentDeltaX = 0;
+                    gbActivePage.classList.add('dragging');
+                    gbActivePage.setPointerCapture(e.pointerId);
+                });
+
+                gbActivePage.addEventListener('pointermove', (e) => {
+                    if (!isDragging || isAnimatingPage) return;
+                    currentDeltaX = e.clientX - startX;
+                    const stageWidth = gbActivePage.offsetWidth || 500;
+                    const progress = Math.max(-1, Math.min(1, currentDeltaX / stageWidth));
+
+                    if (currentDeltaX < 0 && currentPage < guestbookPages.length - 1) {
+                        // Arrastrando hacia la izquierda -> muestra debajo la página siguiente y gira la actual
+                        if (gbUnderImg && gbUnderPage) {
+                            gbUnderImg.src = guestbookPages[currentPage + 1];
+                            gbUnderPage.style.opacity = '1';
+                        }
+                        const angle = progress * 75; // hasta -75deg
+                        gbActivePage.style.transform = `rotateY(${angle}deg) translateX(${currentDeltaX * 0.25}px)`;
+                        gbActivePage.style.boxShadow = '20px 10px 35px rgba(0,0,0,0.45)';
+                    } else if (currentDeltaX > 0 && currentPage > 0) {
+                        // Arrastrando hacia la derecha -> muestra debajo la página anterior
+                        if (gbUnderImg && gbUnderPage) {
+                            gbUnderImg.src = guestbookPages[currentPage - 1];
+                            gbUnderPage.style.opacity = '1';
+                        }
+                        gbActivePage.style.transform = `translateX(${currentDeltaX * 0.65}px) rotateY(${progress * 12}deg)`;
+                    } else {
+                        // Resistencia en primera o última página
+                        gbActivePage.style.transform = `translateX(${currentDeltaX * 0.15}px)`;
+                    }
+                });
+
+                const finishPointerDrag = (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    if (gbActivePage.hasPointerCapture(e.pointerId)) {
+                        gbActivePage.releasePointerCapture(e.pointerId);
+                    }
+
+                    const threshold = 65;
+                    if (currentDeltaX < -threshold && currentPage < guestbookPages.length - 1) {
+                        turnPage(1);
+                    } else if (currentDeltaX > threshold && currentPage > 0) {
+                        turnPage(-1);
+                    } else {
+                        updateGuestbookUI();
+                    }
+                };
+
+                gbActivePage.addEventListener('pointerup', finishPointerDrag);
+                gbActivePage.addEventListener('pointercancel', finishPointerDrag);
+            }
+
+            // Navegación por teclado cuando el libro está abierto
+            document.addEventListener('keydown', (e) => {
+                if (guestbookModal && !guestbookModal.classList.contains('hidden')) {
+                    if (e.key === 'ArrowRight') turnPage(1);
+                    if (e.key === 'ArrowLeft') turnPage(-1);
+                    if (e.key === 'Escape') closeGuestbook();
+                }
+            });
 
             // Initial state (Mostrar portada por defecto)
             showSection('inicio');
