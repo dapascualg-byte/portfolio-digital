@@ -375,7 +375,7 @@
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
                          <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://files.catbox.moe/mvf9fo.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://iili.io/oKkNpC7.md.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
                      </div>
 
@@ -383,7 +383,7 @@
                      <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-md border border-gray-100 dark:border-gray-700">
                          <div class="aspect-4/3 overflow-hidden rounded-md bg-gray-100 relative cursor-pointer expo-container">
                              <div class="no-download-overlay"></div>
-                             <img src="https://files.catbox.moe/1zoxk6.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
+                             <img src="https://iili.io/oKkNyG9.md.jpg" alt="Fotografía de la exposición La Forma de la Mirada" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300 expo-img" draggable="false">
                          </div>
                      </div>
                  </div>
@@ -539,10 +539,10 @@
 
         const guestbookPages = [
             'https://files.catbox.moe/q2yoo7.jpg',
-            'https://files.catbox.moe/6naltd.jpg',
-            'https://files.catbox.moe/r70jav.jpg',
-            'https://files.catbox.moe/fbjys4.jpg',
-            'https://files.catbox.moe/b5qt31.jpg'
+            'https://iili.io/oKkO94e.md.jpg',
+            'https://iili.io/oKkNbQS.md.jpg',
+            'https://iili.io/oKkOdYb.md.jpg',
+            'https://iili.io/oKkO2vj.md.jpg'
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -811,11 +811,9 @@
                 if (gbActivePage) {
                     gbActivePage.classList.remove('dragging');
                     if (direction > 0) {
-                        // Pasar hoja hacia adelante (giro desde el lomo izquierdo)
                         gbActivePage.style.transform = 'rotateY(-105deg) translateX(-40px)';
                         gbActivePage.style.opacity = '0';
                     } else {
-                        // Retroceder hoja
                         gbActivePage.style.transform = 'translateX(65%) rotateY(15deg)';
                         gbActivePage.style.opacity = '0';
                     }
@@ -854,7 +852,6 @@
             if (gbPrevBtn) gbPrevBtn.addEventListener('click', () => turnPage(-1));
             if (gbNextBtn) gbNextBtn.addEventListener('click', () => turnPage(1));
 
-            // Arrastre con puntero / ratón / dedo para pasar la hoja
             if (gbActivePage) {
                 gbActivePage.addEventListener('pointerdown', (e) => {
                     if (isAnimatingPage) return;
@@ -872,23 +869,20 @@
                     const progress = Math.max(-1, Math.min(1, currentDeltaX / stageWidth));
 
                     if (currentDeltaX < 0 && currentPage < guestbookPages.length - 1) {
-                        // Arrastrando hacia la izquierda -> muestra debajo la página siguiente y gira la actual
                         if (gbUnderImg && gbUnderPage) {
                             gbUnderImg.src = guestbookPages[currentPage + 1];
                             gbUnderPage.style.opacity = '1';
                         }
-                        const angle = progress * 75; // hasta -75deg
+                        const angle = progress * 75;
                         gbActivePage.style.transform = `rotateY(${angle}deg) translateX(${currentDeltaX * 0.25}px)`;
                         gbActivePage.style.boxShadow = '20px 10px 35px rgba(0,0,0,0.45)';
                     } else if (currentDeltaX > 0 && currentPage > 0) {
-                        // Arrastrando hacia la derecha -> muestra debajo la página anterior
                         if (gbUnderImg && gbUnderPage) {
                             gbUnderImg.src = guestbookPages[currentPage - 1];
                             gbUnderPage.style.opacity = '1';
                         }
                         gbActivePage.style.transform = `translateX(${currentDeltaX * 0.65}px) rotateY(${progress * 12}deg)`;
                     } else {
-                        // Resistencia en primera o última página
                         gbActivePage.style.transform = `translateX(${currentDeltaX * 0.15}px)`;
                     }
                 });
@@ -914,7 +908,6 @@
                 gbActivePage.addEventListener('pointercancel', finishPointerDrag);
             }
 
-            // Navegación por teclado cuando el libro está abierto
             document.addEventListener('keydown', (e) => {
                 if (guestbookModal && !guestbookModal.classList.contains('hidden')) {
                     if (e.key === 'ArrowRight') turnPage(1);
