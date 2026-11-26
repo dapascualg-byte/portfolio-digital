@@ -156,7 +156,7 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        aside.sidebar-left {
+        aside {
             opacity: 0;
             animation: slideInFromLeft 0.8s ease-out forwards;
         }
@@ -169,8 +169,8 @@
     <!-- End Google Tag Manager (noscript) -->
     
     <div class="flex flex-col md:flex-row min-h-screen">
-        <!-- Sidebar Izquierdo -->
-        <aside class="sidebar-left w-full md:w-72 bg-orange-50 md:border-r border-gray-200 p-8 md:fixed md:left-0 md:top-0 md:h-full flex flex-col z-20">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-72 bg-orange-50 md:border-r border-gray-200 p-8 md:fixed md:h-full flex flex-col">
             <div class="flex flex-col h-full">
                 <header class="mb-8 text-center md:text-left">
                     <h1 class="text-3xl font-bold mb-2">Diego A. Pascual García</h1>
@@ -214,15 +214,20 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 md:ml-72 md:mr-64 p-8 lg:p-12">
+        <main class="flex-1 md:ml-72 p-8 lg:p-12">
             
-            <!-- SECCIÓN DE INICIO (SIN CARTEL NI CONTADOR) -->
-            <section id="inicio-section" class="flex flex-col items-center justify-center min-h-[75vh] text-center">
-                 <h2 class="text-3xl sm:text-4xl font-bold mb-3">Diego A. Pascual García</h2>
-                 <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl mb-8">
-                     Retratos y pinturas digitales. Exposición "La forma de la memoria" en el Centro Cultural Paco de Lucía.
-                 </p>
-                 <button id="btn-entrar" class="bg-gray-900 hover:bg-gray-700 dark:bg-orange-50 dark:hover:bg-orange-100 dark:text-gray-900 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors duration-300 shadow-lg cursor-pointer">
+            <!-- SECCIÓN DE INICIO (TEXTO DE BIENVENIDA TRAS LA EXPOSICIÓN) -->
+            <section id="inicio-section" class="flex flex-col items-center justify-center min-h-[75vh]">
+                 <article class="max-w-2xl w-full text-left space-y-5 text-base sm:text-lg leading-relaxed text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800/80 p-7 sm:p-10 rounded-xl shadow-sm border border-gray-200/80 dark:border-gray-700">
+                     <p>Hoy 26 de noviembre fui a recoger los retratos de la exposición La Forma de la Memoria, la que ha sido mi primera muestra abierta al público. Cerca del centro cultural, al otro lado de las vías, hay una zona verde con varios parques donde a veces vamos con nuestra hija. Allí la hemos visto crecer un poquito, a días sueltos, entre los "cacharritos" y los toboganes. Dentro de la misma estación de metro también vi pasar al pintor Antonio López, mientras iba camino de la torre de bomberos desde la que trabajaba en un paisaje del barrio de Latina. También, cada vez que paso con el coche por el semáforo que hay al lado de la gasolinera, me acuerdo de las fotos que le saqué a mi madre anciana, quien aquella mañana se sentía feliz y sonriente, y posaba para mí como si volviese a ser la modelo que pudo ser, y no quiso. Todo son recuerdos entrelazados, y esa es la forma de mi memoria.</p>
+                     <p>Con mi exposición traté de acercar rostros conocidos a la gente de a pie, y pude ser testigo de la interacción con algunos de los retratos cuando la gente paseaba entre ellos sin saber que era yo quien los había pintado.</p>
+                     <p>Debo reconocer que me resultó muy complicado explicar cómo los hice cuando me preguntaban. Lo que para mí era práctica habitual, para otras personas era misterio, lejanía, e incluso hasta sospecha. Tan solo se trataba de pintar en una pantalla en lugar de sobre un folio, de usar una herramienta digital en lugar de un lápiz, una brocha o un pincel.</p>
+                     <p>Y sobre todo de hacerlo con mi propia mano, la que es mía, insisto, la propia, la que solo yo puedo usar, de la que solo salen este tipo de retratos cuando la herramienta se desliza por el frío y duro papel del dispositivo.</p>
+                     <p>Solo si fui capaz de generar algún recuerdo con mis retratos me sentiría plenamente satisfecho.</p>
+                     <p class="pt-2 text-sm sm:text-base font-semibold text-gray-600 dark:text-gray-400">26 de noviembre de 2026.</p>
+                 </article>
+
+                 <button id="btn-entrar" class="mt-8 bg-gray-900 hover:bg-gray-700 dark:bg-orange-50 dark:hover:bg-orange-100 dark:text-gray-900 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors duration-300 shadow-lg cursor-pointer">
                      Entrar al Portfolio
                  </button>
             </section>
@@ -396,21 +401,6 @@
                 </div>
             </section>
         </main>
-
-        <!-- Sidebar Derecho: Enlace de la exposición y Libro de visitas -->
-        <aside class="w-full md:w-64 bg-orange-50/70 dark:bg-gray-800 md:border-l border-gray-200 dark:border-gray-700 p-6 md:fixed md:right-0 md:top-0 md:h-full flex flex-col justify-between z-20">
-            <div>
-                <p class="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400 mb-3">Exposición</p>
-                <a href="#exposicion-paco" id="sidebar-right-expo-link" class="block p-4 rounded-lg bg-white dark:bg-gray-900/60 border border-orange-200/80 dark:border-gray-700 shadow-sm hover:bg-orange-100/70 dark:hover:bg-gray-700/70 transition-colors">
-                    <span class="block text-sm font-bold text-gray-900 dark:text-white">La forma de la memoria</span>
-                    <span class="block text-xs text-gray-500 dark:text-gray-400 mt-1">Centro Cultural Paco de Lucía</span>
-                </a>
-
-                <button type="button" id="btn-libro-visitas-sidebar" class="mt-3 w-full text-left p-3.5 rounded-lg bg-orange-100/80 hover:bg-orange-200/80 dark:bg-orange-950/60 dark:hover:bg-orange-900/60 text-orange-950 dark:text-orange-200 border border-orange-300/80 dark:border-orange-800/70 text-xs font-semibold transition-colors cursor-pointer">
-                    Libro de visitas (6 págs.)
-                </button>
-            </div>
-        </aside>
     </div>
 
     <!-- Modal para ampliar imágenes -->
@@ -583,14 +573,6 @@
                 }
             });
 
-            const sidebarRightExpoLink = document.getElementById('sidebar-right-expo-link');
-            if (sidebarRightExpoLink) {
-                sidebarRightExpoLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showSection('exposicion-paco');
-                });
-            }
-
             // --- Gallery Filtering and Rendering ---
             const renderGallery = (items) => {
                 if (!gallery) return;
@@ -692,7 +674,6 @@
             const guestbookModal = document.getElementById('guestbookModal');
             const closeGuestbookBtn = document.getElementById('closeGuestbook');
             const btnLibroVisitas = document.getElementById('btn-libro-visitas');
-            const btnLibroVisitasSidebar = document.getElementById('btn-libro-visitas-sidebar');
             const gbActiveImg = document.getElementById('gbActiveImg');
             const gbPrevBtn = document.getElementById('gbPrevBtn');
             const gbNextBtn = document.getElementById('gbNextBtn');
@@ -727,16 +708,14 @@
                 renderPageButtons();
             };
 
-            const openGuestbook = () => {
-                if (!guestbookModal) return;
-                currentPage = 0;
-                updateGuestbookUI();
-                guestbookModal.classList.remove('hidden');
-                setTimeout(() => guestbookModal.classList.remove('opacity-0'), 10);
-            };
-
-            if (btnLibroVisitas) btnLibroVisitas.addEventListener('click', openGuestbook);
-            if (btnLibroVisitasSidebar) btnLibroVisitasSidebar.addEventListener('click', openGuestbook);
+            if (btnLibroVisitas && guestbookModal) {
+                btnLibroVisitas.addEventListener('click', () => {
+                    currentPage = 0;
+                    updateGuestbookUI();
+                    guestbookModal.classList.remove('hidden');
+                    setTimeout(() => guestbookModal.classList.remove('opacity-0'), 10);
+                });
+            }
 
             const closeGuestbook = () => {
                 if (guestbookModal) {
