@@ -156,7 +156,7 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        aside {
+        aside.sidebar-left {
             opacity: 0;
             animation: slideInFromLeft 0.8s ease-out forwards;
         }
@@ -169,8 +169,8 @@
     <!-- End Google Tag Manager (noscript) -->
     
     <div class="flex flex-col md:flex-row min-h-screen">
-        <!-- Sidebar -->
-        <aside class="w-full md:w-72 bg-orange-50 md:border-r border-gray-200 p-8 md:fixed md:h-full flex flex-col">
+        <!-- Sidebar Izquierdo -->
+        <aside class="sidebar-left w-full md:w-72 bg-orange-50 md:border-r border-gray-200 p-8 md:fixed md:left-0 md:top-0 md:h-full flex flex-col z-20">
             <div class="flex flex-col h-full">
                 <header class="mb-8 text-center md:text-left">
                     <h1 class="text-3xl font-bold mb-2">Diego A. Pascual García</h1>
@@ -214,43 +214,14 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 md:ml-72 p-8 lg:p-12">
+        <main class="flex-1 md:ml-72 md:mr-64 p-8 lg:p-12">
             
-            <!-- SECCIÓN DE INICIO (PORTADA CON EL CARTEL REDUCIDO) -->
+            <!-- SECCIÓN DE INICIO (SIN CARTEL NI CONTADOR) -->
             <section id="inicio-section" class="flex flex-col items-center justify-center min-h-[75vh] text-center">
-                 <div class="relative max-w-xs sm:max-w-sm max-h-[46vh] mb-5 shadow-lg rounded-md overflow-hidden">
-                     <div class="no-download-overlay"></div>
-                     <img src="https://i.postimg.cc/0QKhLKyt/Gemini-Generated-Image-jvsyp0jvsyp0jvsy.jpg" alt="Cartel Clausura y Venta de Obra - La Forma de la Memoria - Jueves 26 de 10h a 14h - Centro Cultural Paco de Lucía" class="w-auto h-auto max-w-full max-h-[46vh] object-contain mx-auto" draggable="false">
-                 </div>
-
-                 <!-- Contador hasta el cierre de la exposición (26 de noviembre a las 14:00) -->
-                 <div id="expo-countdown" class="mb-6 px-5 py-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm max-w-md w-full">
-                     <p class="text-xs font-semibold uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-2">
-                         Clausura en C. C. Paco de Lucía · Jueves 26 de noviembre, 10h a 14h
-                     </p>
-                     <div id="countdown-grid" class="grid grid-cols-4 gap-2 text-center">
-                         <div class="bg-orange-50 dark:bg-gray-900/60 rounded py-1.5 px-2">
-                             <span id="cd-days" class="block text-xl font-bold text-gray-900 dark:text-white tabular-nums">--</span>
-                             <span class="text-[11px] text-gray-500 dark:text-gray-400">días</span>
-                         </div>
-                         <div class="bg-orange-50 dark:bg-gray-900/60 rounded py-1.5 px-2">
-                             <span id="cd-hours" class="block text-xl font-bold text-gray-900 dark:text-white tabular-nums">--</span>
-                             <span class="text-[11px] text-gray-500 dark:text-gray-400">horas</span>
-                         </div>
-                         <div class="bg-orange-50 dark:bg-gray-900/60 rounded py-1.5 px-2">
-                             <span id="cd-minutes" class="block text-xl font-bold text-gray-900 dark:text-white tabular-nums">--</span>
-                             <span class="text-[11px] text-gray-500 dark:text-gray-400">min</span>
-                         </div>
-                         <div class="bg-orange-50 dark:bg-gray-900/60 rounded py-1.5 px-2">
-                             <span id="cd-seconds" class="block text-xl font-bold text-gray-900 dark:text-white tabular-nums">--</span>
-                             <span class="text-[11px] text-gray-500 dark:text-gray-400">seg</span>
-                         </div>
-                     </div>
-                     <p id="countdown-ended" class="hidden text-sm font-medium text-gray-600 dark:text-gray-300">
-                         La exposición en el Centro Cultural Paco de Lucía finalizó el jueves 26 de noviembre a las 14:00 h.
-                     </p>
-                 </div>
-
+                 <h2 class="text-3xl sm:text-4xl font-bold mb-3">Diego A. Pascual García</h2>
+                 <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl mb-8">
+                     Retratos y pinturas digitales. Exposición "La forma de la memoria" en el Centro Cultural Paco de Lucía.
+                 </p>
                  <button id="btn-entrar" class="bg-gray-900 hover:bg-gray-700 dark:bg-orange-50 dark:hover:bg-orange-100 dark:text-gray-900 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors duration-300 shadow-lg cursor-pointer">
                      Entrar al Portfolio
                  </button>
@@ -271,7 +242,7 @@
             <!-- SECCIÓN: FOTOGRAFÍAS DE LA EXPO EN PACO DE LUCÍA -->
             <section id="exposicion-paco-section" class="hidden max-w-5xl mx-auto">
                  <h2 class="text-4xl font-bold mb-2">Exposición "La forma de la memoria"</h2>
-                 <p class="text-gray-600 dark:text-gray-400 mb-6 text-lg">Centro Cultural Paco de Lucía (Del 4 al 26 de noviembre · Clausura jueves 26 de 10h a 14h)</p>
+                 <p class="text-gray-600 dark:text-gray-400 mb-6 text-lg">Centro Cultural Paco de Lucía (Del 4 al 26 de noviembre)</p>
 
                  <!-- Difusión institucional, prensa y libro de visitas -->
                  <div class="mb-8 p-5 rounded-xl bg-orange-50/80 dark:bg-gray-800 border border-orange-200/80 dark:border-gray-700 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -289,7 +260,7 @@
                              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                          </a>
                          <button type="button" id="btn-libro-visitas" class="inline-flex items-center gap-2 bg-orange-100 hover:bg-orange-200 dark:bg-orange-950/60 dark:hover:bg-orange-900/60 text-orange-950 dark:text-orange-200 font-semibold text-sm py-2.5 px-4 rounded-md border border-orange-300/80 dark:border-orange-800/70 shadow-sm transition-colors duration-300 cursor-pointer">
-                             <span>Libro de visitas (5 págs.)</span>
+                             <span>Libro de visitas (6 págs.)</span>
                              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                          </button>
                      </div>
@@ -376,7 +347,7 @@
                      
                      <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
                          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Centro Cultural Paco de Lucía</h3>
-                         <p class="text-orange-600 dark:text-orange-400 font-semibold mt-2">Del 4 al 26 de noviembre (Clausura jueves 26 de 10h a 14h)</p>
+                         <p class="text-orange-600 dark:text-orange-400 font-semibold mt-2">Del 4 al 26 de noviembre (Finalizada)</p>
                          <p class="text-gray-700 dark:text-gray-300 mt-2 font-medium">📍 Centro Cultural Paco de Lucía</p>
                      </div>
 
@@ -425,6 +396,21 @@
                 </div>
             </section>
         </main>
+
+        <!-- Sidebar Derecho: Enlace de la exposición y Libro de visitas -->
+        <aside class="w-full md:w-64 bg-orange-50/70 dark:bg-gray-800 md:border-l border-gray-200 dark:border-gray-700 p-6 md:fixed md:right-0 md:top-0 md:h-full flex flex-col justify-between z-20">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-orange-700 dark:text-orange-400 mb-3">Exposición</p>
+                <a href="#exposicion-paco" id="sidebar-right-expo-link" class="block p-4 rounded-lg bg-white dark:bg-gray-900/60 border border-orange-200/80 dark:border-gray-700 shadow-sm hover:bg-orange-100/70 dark:hover:bg-gray-700/70 transition-colors">
+                    <span class="block text-sm font-bold text-gray-900 dark:text-white">La forma de la memoria</span>
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mt-1">Centro Cultural Paco de Lucía</span>
+                </a>
+
+                <button type="button" id="btn-libro-visitas-sidebar" class="mt-3 w-full text-left p-3.5 rounded-lg bg-orange-100/80 hover:bg-orange-200/80 dark:bg-orange-950/60 dark:hover:bg-orange-900/60 text-orange-950 dark:text-orange-200 border border-orange-300/80 dark:border-orange-800/70 text-xs font-semibold transition-colors cursor-pointer">
+                    Libro de visitas (6 págs.)
+                </button>
+            </div>
+        </aside>
     </div>
 
     <!-- Modal para ampliar imágenes -->
@@ -454,7 +440,7 @@
                 ← Anterior
             </button>
             <div id="gbPageDots" class="flex items-center gap-1.5"></div>
-            <span id="gbCounter" class="text-sm font-medium tabular-nums min-w-[105px] text-center">Página 1 de 5</span>
+            <span id="gbCounter" class="text-sm font-medium tabular-nums min-w-[105px] text-center">Página 1 de 6</span>
             <button type="button" id="gbNextBtn" class="px-4 py-2 rounded-md bg-white/15 hover:bg-white/25 disabled:opacity-35 disabled:pointer-events-none text-sm font-semibold transition-colors cursor-pointer">
                 Siguiente →
             </button>
@@ -511,7 +497,8 @@
             'https://i.postimg.cc/HknP77CG/IMG20261122205031.jpg',
             'https://i.postimg.cc/Cx56ffpt/IMG20261122205037.jpg',
             'https://i.postimg.cc/2SyXBBNg/IMG20261122205026.jpg',
-            'https://i.postimg.cc/sgx0ZZCt/IMG20261122205021.jpg'
+            'https://i.postimg.cc/sgx0ZZCt/IMG20261122205021.jpg',
+            'https://i.postimg.cc/PfSPDTZs/Pagina-de-dedicatorias-manuscritas-en-espanol.png'
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -536,42 +523,6 @@
                 retrato: document.getElementById('filter-retrato'),
                 pintura: document.getElementById('filter-pintura')
             };
-
-            // --- Contador hasta el 26 de noviembre a las 14:00 ---
-            const updateCountdown = () => {
-                const now = new Date();
-                let targetYear = now.getFullYear();
-                let targetDate = new Date(targetYear, 10, 26, 14, 0, 0);
-
-                const diff = targetDate.getTime() - now.getTime();
-                const gridEl = document.getElementById('countdown-grid');
-                const endedEl = document.getElementById('countdown-ended');
-
-                if (diff <= 0) {
-                    if (gridEl) gridEl.classList.add('hidden');
-                    if (endedEl) endedEl.classList.remove('hidden');
-                    return;
-                }
-
-                const totalSeconds = Math.floor(diff / 1000);
-                const days = Math.floor(totalSeconds / 86400);
-                const hours = Math.floor((totalSeconds % 86400) / 3600);
-                const minutes = Math.floor((totalSeconds % 3600) / 60);
-                const seconds = totalSeconds % 60;
-
-                const daysEl = document.getElementById('cd-days');
-                const hoursEl = document.getElementById('cd-hours');
-                const minutesEl = document.getElementById('cd-minutes');
-                const secondsEl = document.getElementById('cd-seconds');
-
-                if (daysEl) daysEl.textContent = String(days);
-                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-                if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-                if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
-            };
-
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
 
             // Botón de entrar desde el inicio
             const btnEntrar = document.getElementById('btn-entrar');
@@ -631,6 +582,14 @@
                     });
                 }
             });
+
+            const sidebarRightExpoLink = document.getElementById('sidebar-right-expo-link');
+            if (sidebarRightExpoLink) {
+                sidebarRightExpoLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection('exposicion-paco');
+                });
+            }
 
             // --- Gallery Filtering and Rendering ---
             const renderGallery = (items) => {
@@ -733,6 +692,7 @@
             const guestbookModal = document.getElementById('guestbookModal');
             const closeGuestbookBtn = document.getElementById('closeGuestbook');
             const btnLibroVisitas = document.getElementById('btn-libro-visitas');
+            const btnLibroVisitasSidebar = document.getElementById('btn-libro-visitas-sidebar');
             const gbActiveImg = document.getElementById('gbActiveImg');
             const gbPrevBtn = document.getElementById('gbPrevBtn');
             const gbNextBtn = document.getElementById('gbNextBtn');
@@ -767,14 +727,16 @@
                 renderPageButtons();
             };
 
-            if (btnLibroVisitas && guestbookModal) {
-                btnLibroVisitas.addEventListener('click', () => {
-                    currentPage = 0;
-                    updateGuestbookUI();
-                    guestbookModal.classList.remove('hidden');
-                    setTimeout(() => guestbookModal.classList.remove('opacity-0'), 10);
-                });
-            }
+            const openGuestbook = () => {
+                if (!guestbookModal) return;
+                currentPage = 0;
+                updateGuestbookUI();
+                guestbookModal.classList.remove('hidden');
+                setTimeout(() => guestbookModal.classList.remove('opacity-0'), 10);
+            };
+
+            if (btnLibroVisitas) btnLibroVisitas.addEventListener('click', openGuestbook);
+            if (btnLibroVisitasSidebar) btnLibroVisitasSidebar.addEventListener('click', openGuestbook);
 
             const closeGuestbook = () => {
                 if (guestbookModal) {
